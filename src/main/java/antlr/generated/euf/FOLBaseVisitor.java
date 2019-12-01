@@ -1,5 +1,5 @@
 // Generated from E:/!PROJECTS/IntelliJ_IDEA/dpllt/src/main/java/antlr\FOL.g4 by ANTLR 4.7.2
-package antlr.generated;
+package antlr.generated.euf;
 import org.antlr.v4.runtime.tree.AbstractParseTreeVisitor;
 
 /**

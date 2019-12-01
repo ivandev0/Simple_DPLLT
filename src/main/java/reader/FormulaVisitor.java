@@ -1,7 +1,7 @@
 package reader;
 
-import antlr.generated.FOLBaseVisitor;
-import antlr.generated.FOLParser;
+import antlr.generated.euf.FOLBaseVisitor;
+import antlr.generated.euf.FOLParser;
 import euf.Equality;
 import euf.Formula;
 import euf.FunctionSymbol;

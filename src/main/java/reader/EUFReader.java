@@ -1,7 +1,7 @@
 package reader;
 
-import antlr.generated.FOLLexer;
-import antlr.generated.FOLParser;
+import antlr.generated.euf.FOLLexer;
+import antlr.generated.euf.FOLParser;
 import euf.Formula;
 import org.antlr.v4.runtime.CharStream;
 import org.antlr.v4.runtime.CharStreams;
