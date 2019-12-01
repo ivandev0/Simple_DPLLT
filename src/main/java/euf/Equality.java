@@ -1,5 +1,8 @@
 package euf;
 
+import java.util.HashSet;
+import java.util.Set;
+
 public class Equality {
     private boolean isEqual;
     private FunctionSymbol left, right;
@@ -20,6 +23,13 @@ public class Equality {
 
     public boolean isEqual() {
         return isEqual;
+    }
+
+    public Set<FunctionSymbol> getAllSubTerms() {
+        Set<FunctionSymbol> subTerms = new HashSet<>();
+        subTerms.addAll(left.getAllSubTerms());
+        subTerms.addAll(right.getAllSubTerms());
+        return subTerms;
     }
 
     @Override
