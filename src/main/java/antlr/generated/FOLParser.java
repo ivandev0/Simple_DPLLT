@@ -300,9 +300,11 @@ public class FOLParser extends Parser {
 	}
 
 	public static class ArgsContext extends ParserRuleContext {
-		public List<TerminalNode> IDENTIFIER() { return getTokens(FOLParser.IDENTIFIER); }
-		public TerminalNode IDENTIFIER(int i) {
-			return getToken(FOLParser.IDENTIFIER, i);
+		public List<FunContext> fun() {
+			return getRuleContexts(FunContext.class);
+		}
+		public FunContext fun(int i) {
+			return getRuleContext(FunContext.class,i);
 		}
 		public ArgsContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
@@ -330,7 +332,7 @@ public class FOLParser extends Parser {
 			if (_la==IDENTIFIER) {
 				{
 				setState(35);
-				match(IDENTIFIER);
+				fun();
 				setState(40);
 				_errHandler.sync(this);
 				_la = _input.LA(1);
@@ -340,7 +342,7 @@ public class FOLParser extends Parser {
 					setState(36);
 					match(T__4);
 					setState(37);
-					match(IDENTIFIER);
+					fun();
 					}
 					}
 					setState(42);
@@ -391,7 +393,7 @@ public class FOLParser extends Parser {
 		"\24\22\3\2\2\2\25\26\5\6\4\2\26\27\7\4\2\2\27\30\5\6\4\2\30\36\3\2\2\2"+
 		"\31\32\5\6\4\2\32\33\7\5\2\2\33\34\5\6\4\2\34\36\3\2\2\2\35\25\3\2\2\2"+
 		"\35\31\3\2\2\2\36\5\3\2\2\2\37#\7\t\2\2 !\7\t\2\2!#\5\b\5\2\"\37\3\2\2"+
-		"\2\" \3\2\2\2#\7\3\2\2\2$-\7\6\2\2%*\7\t\2\2&\'\7\7\2\2\')\7\t\2\2(&\3"+
+		"\2\" \3\2\2\2#\7\3\2\2\2$-\7\6\2\2%*\5\6\4\2&\'\7\7\2\2\')\5\6\4\2(&\3"+
 		"\2\2\2),\3\2\2\2*(\3\2\2\2*+\3\2\2\2+.\3\2\2\2,*\3\2\2\2-%\3\2\2\2-.\3"+
 		"\2\2\2./\3\2\2\2/\60\7\b\2\2\60\t\3\2\2\2\7\22\35\"*-";
 	public static final ATN _ATN =

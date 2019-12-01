@@ -12,7 +12,7 @@ fun: IDENTIFIER
     | IDENTIFIER args
     ;
 
-args: '(' (IDENTIFIER (',' IDENTIFIER)*)? ')';
+args: '(' (fun (',' fun)*)? ')';
 
 IDENTIFIER: [a-zA-Z0-9]+;
 WS : [ \t]+ -> skip ; // toss out whitespace

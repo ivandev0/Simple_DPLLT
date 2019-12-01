@@ -42,11 +42,11 @@ public class FormulaVisitor extends FOLBaseVisitor {
     }
 
     @Override
-    public List<String> visitArgs(FOLParser.ArgsContext ctx) {
+    public List<FunctionSymbol> visitArgs(FOLParser.ArgsContext ctx) {
         if (ctx == null) return new ArrayList<>();
-        return ctx.IDENTIFIER()
+        return ctx.fun()
                 .stream()
-                .map(Object::toString)
+                .map(this::visitFun)
                 .collect(Collectors.toList());
     }
 }
