@@ -1,9 +1,6 @@
 package euf;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class FunctionSymbol {
@@ -28,6 +25,23 @@ public class FunctionSymbol {
         subTerms.add(this);
         args.forEach(it -> subTerms.addAll(it.getAllSubTerms()));
         return subTerms;
+    }
+
+    public boolean contains(FunctionSymbol symbol) {
+        return getAllSubTerms().contains(symbol);
+    }
+
+    public FunctionSymbol replace(FunctionSymbol oldSymbol, FunctionSymbol newSymbol) {
+        if (oldSymbol.name.equals(name)) return newSymbol;
+        List<FunctionSymbol> newArgs = new ArrayList<>();
+        for (FunctionSymbol arg : args) {
+            if (arg.contains(oldSymbol)) {
+                newArgs.add(arg.replace(oldSymbol, newSymbol));
+            } else {
+                newArgs.add(arg);
+            }
+        }
+        return new FunctionSymbol(name, newArgs);
     }
 
     @Override

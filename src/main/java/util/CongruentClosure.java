@@ -2,30 +2,114 @@ package util;
 
 import euf.FunctionSymbol;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 public class CongruentClosure {
     List<Set<FunctionSymbol>> closure;
+    Set<FunctionSymbol> allSubTerms;
 
     public CongruentClosure(Set<FunctionSymbol> init) {
+        allSubTerms = new HashSet<>(init);
         closure = new ArrayList<>();
         for (FunctionSymbol functionSymbol : init) {
-            closure.add(new HashSet<FunctionSymbol>() {{ add(functionSymbol); }});
+            closure.add(new HashSet<FunctionSymbol>() {{
+                add(functionSymbol);
+            }});
         }
     }
 
     public void newAssociation(FunctionSymbol first, FunctionSymbol second) {
+        Set<FunctionSymbol> equals = new HashSet<>();
+        closure.removeIf(it -> {
+            boolean contains = it.contains(first);
+            if (contains) equals.addAll(it);
+            return contains;
+        });
+        closure.forEach(it -> {
+            if (it.contains(second)) {
+                it.addAll(equals);
+                propagation(it);
+            }
+        });
 
+        union();
     }
 
-    private void propagation() {
+    private void propagation(Set<FunctionSymbol> newSet) {
+        List<Pair<FunctionSymbol, FunctionSymbol>> equalPairs = new ArrayList<>();
+        for (FunctionSymbol functionSymbol1 : newSet) {
+            for (FunctionSymbol functionSymbol2 : newSet) {
+                if (functionSymbol1 != functionSymbol2) {
+                    equalPairs.add(new Pair<>(functionSymbol1, functionSymbol2));
+                }
+            }
+        }
+
+        for (Set<FunctionSymbol> symbols : closure) {
+            if (symbols != newSet) {
+                Set<FunctionSymbol> newSymbols = new HashSet<>();
+                for (FunctionSymbol symbol : symbols) {
+                    for (Pair<FunctionSymbol, FunctionSymbol> equalPair : equalPairs) {
+                        FunctionSymbol newSymbol = null;
+                        if (symbol.contains(equalPair.getL())) {
+                            newSymbol = symbol.replace(equalPair.getL(), equalPair.getR());
+                        } else if (symbol.contains(equalPair.getR())) {
+                            newSymbol = symbol.replace(equalPair.getR(), equalPair.getL());
+                        }
+                        if (newSymbol != null && allSubTerms.contains(newSymbol)) {
+                            // add to symbols
+                            newSymbols.add(newSymbol);
+                        }
+                    }
+                }
+                symbols.addAll(newSymbols);
+            }
+        }
+    }
+
+    private void union() {
+        L: for (int i = 0; i < closure.size() - 1; i++) {
+            Set<FunctionSymbol> functionSymbols1 = closure.get(i);
+            for (int j = i + 1; j < closure.size(); j++) {
+                Set<FunctionSymbol> functionSymbols2 = closure.get(j);
+                if (functionSymbols1.stream().anyMatch(functionSymbols2::contains)) {
+                    functionSymbols1.addAll(functionSymbols2);
+                    closure.remove(functionSymbols2);
+                    i--;
+                    continue L;
+                }
+            }
+        }
 
     }
 
     public boolean symbolsAreEqual(FunctionSymbol first, FunctionSymbol second) {
         return closure.stream().anyMatch(it -> it.contains(first) && it.contains(second));
+    }
+}
+
+class Pair<L, R> {
+    private L l;
+    private R r;
+
+    public Pair(L l, R r) {
+        this.l = l;
+        this.r = r;
+    }
+
+    public L getL() {
+        return l;
+    }
+
+    public R getR() {
+        return r;
+    }
+
+    public void setL(L l) {
+        this.l = l;
+    }
+
+    public void setR(R r) {
+        this.r = r;
     }
 }
