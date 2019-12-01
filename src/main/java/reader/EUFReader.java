@@ -1,8 +1,8 @@
 package reader;
 
-import antlr.generated.euf.FOLBaseVisitor;
-import antlr.generated.euf.FOLLexer;
-import antlr.generated.euf.FOLParser;
+import antlr.generated.euf.EUFBaseVisitor;
+import antlr.generated.euf.EUFLexer;
+import antlr.generated.euf.EUFParser;
 import euf.EUFEquality;
 import euf.EUFFormula;
 import euf.FunctionSymbol;
@@ -17,46 +17,46 @@ import java.util.stream.Collectors;
 public class EUFReader {
     public static EUFFormula transform(String str) {
         CharStream inputStream = CharStreams.fromString(str);
-        FOLLexer markupLexer = new FOLLexer(inputStream);
+        EUFLexer markupLexer = new EUFLexer(inputStream);
         CommonTokenStream commonTokenStream = new CommonTokenStream(markupLexer);
-        FOLParser markupParser = new FOLParser(commonTokenStream);
+        EUFParser markupParser = new EUFParser(commonTokenStream);
         FormulaVisitor visitor = new FormulaVisitor();
         return visitor.parse(markupParser.formula());
     }
 
-    private static class FormulaVisitor extends FOLBaseVisitor {
+    private static class FormulaVisitor extends EUFBaseVisitor {
         EUFFormula formula = new EUFFormula();
 
-        EUFFormula parse(FOLParser.FormulaContext ctx) {
+        EUFFormula parse(EUFParser.FormulaContext ctx) {
             visit(ctx);
             return formula;
         }
 
         @Override
-        public Object visitFunction(FOLParser.FunctionContext ctx) {
+        public Object visitFunction(EUFParser.FunctionContext ctx) {
             formula.add(visitEquality(ctx.equality()));
             return super.visitFunction(ctx);
         }
 
         @Override
-        public Object visitConjunction(FOLParser.ConjunctionContext ctx) {
+        public Object visitConjunction(EUFParser.ConjunctionContext ctx) {
             formula.add(visitEquality(ctx.equality()));
             return super.visitConjunction(ctx);
         }
 
         @Override
-        public EUFEquality visitEquality(FOLParser.EqualityContext ctx) {
+        public EUFEquality visitEquality(EUFParser.EqualityContext ctx) {
             boolean isEqual = ctx.children.get(1).toString().equals("=");
             return new EUFEquality(visitFun(ctx.fun(0)), visitFun(ctx.fun(1)), isEqual);
         }
 
         @Override
-        public FunctionSymbol visitFun(FOLParser.FunContext ctx) {
+        public FunctionSymbol visitFun(EUFParser.FunContext ctx) {
             return new FunctionSymbol(ctx.IDENTIFIER().toString(), visitArgs(ctx.args()));
         }
 
         @Override
-        public List<FunctionSymbol> visitArgs(FOLParser.ArgsContext ctx) {
+        public List<FunctionSymbol> visitArgs(EUFParser.ArgsContext ctx) {
             if (ctx == null) return new ArrayList<>();
             return ctx.fun()
                     .stream()

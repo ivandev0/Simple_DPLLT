@@ -1,4 +1,4 @@
-grammar FOL;
+grammar EUF;
 
 formula: equality               #function
     | formula '^' equality      #conjunction

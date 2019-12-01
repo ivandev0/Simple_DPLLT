@@ -1,13 +1,16 @@
-// Generated from E:/!PROJECTS/IntelliJ_IDEA/dpllt/src/main/java/antlr\FOL.g4 by ANTLR 4.7.2
+// Generated from E:/!PROJECTS/IntelliJ_IDEA/dpllt/src/main/java/antlr\EUF.g4 by ANTLR 4.7.2
 package antlr.generated.euf;
 import org.antlr.v4.runtime.atn.*;
 import org.antlr.v4.runtime.dfa.DFA;
 import org.antlr.v4.runtime.*;
+import org.antlr.v4.runtime.misc.*;
 import org.antlr.v4.runtime.tree.*;
 import java.util.List;
+import java.util.Iterator;
+import java.util.ArrayList;
 
 @SuppressWarnings({"all", "warnings", "unchecked", "unused", "cast"})
-public class FOLParser extends Parser {
+public class EUFParser extends Parser {
 	static { RuntimeMetaData.checkVersion("4.7.2", RuntimeMetaData.VERSION); }
 
 	protected static final DFA[] _decisionToDFA;
@@ -70,7 +73,7 @@ public class FOLParser extends Parser {
 	}
 
 	@Override
-	public String getGrammarFileName() { return "FOL.g4"; }
+	public String getGrammarFileName() { return "EUF.g4"; }
 
 	@Override
 	public String[] getRuleNames() { return ruleNames; }
@@ -81,7 +84,7 @@ public class FOLParser extends Parser {
 	@Override
 	public ATN getATN() { return _ATN; }
 
-	public FOLParser(TokenStream input) {
+	public EUFParser(TokenStream input) {
 		super(input);
 		_interp = new ParserATNSimulator(this,_ATN,_decisionToDFA,_sharedContextCache);
 	}
@@ -107,7 +110,7 @@ public class FOLParser extends Parser {
 		public ConjunctionContext(FormulaContext ctx) { copyFrom(ctx); }
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof FOLVisitor ) return ((FOLVisitor<? extends T>)visitor).visitConjunction(this);
+			if ( visitor instanceof EUFVisitor ) return ((EUFVisitor<? extends T>)visitor).visitConjunction(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -118,7 +121,7 @@ public class FOLParser extends Parser {
 		public FunctionContext(FormulaContext ctx) { copyFrom(ctx); }
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof FOLVisitor ) return ((FOLVisitor<? extends T>)visitor).visitFunction(this);
+			if ( visitor instanceof EUFVisitor ) return ((EUFVisitor<? extends T>)visitor).visitFunction(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -197,7 +200,7 @@ public class FOLParser extends Parser {
 		@Override public int getRuleIndex() { return RULE_equality; }
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof FOLVisitor ) return ((FOLVisitor<? extends T>)visitor).visitEquality(this);
+			if ( visitor instanceof EUFVisitor ) return ((EUFVisitor<? extends T>)visitor).visitEquality(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -245,7 +248,7 @@ public class FOLParser extends Parser {
 	}
 
 	public static class FunContext extends ParserRuleContext {
-		public TerminalNode IDENTIFIER() { return getToken(FOLParser.IDENTIFIER, 0); }
+		public TerminalNode IDENTIFIER() { return getToken(EUFParser.IDENTIFIER, 0); }
 		public ArgsContext args() {
 			return getRuleContext(ArgsContext.class,0);
 		}
@@ -255,7 +258,7 @@ public class FOLParser extends Parser {
 		@Override public int getRuleIndex() { return RULE_fun; }
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof FOLVisitor ) return ((FOLVisitor<? extends T>)visitor).visitFun(this);
+			if ( visitor instanceof EUFVisitor ) return ((EUFVisitor<? extends T>)visitor).visitFun(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -309,7 +312,7 @@ public class FOLParser extends Parser {
 		@Override public int getRuleIndex() { return RULE_args; }
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof FOLVisitor ) return ((FOLVisitor<? extends T>)visitor).visitArgs(this);
+			if ( visitor instanceof EUFVisitor ) return ((EUFVisitor<? extends T>)visitor).visitArgs(this);
 			else return visitor.visitChildren(this);
 		}
 	}
