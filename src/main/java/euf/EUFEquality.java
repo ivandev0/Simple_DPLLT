@@ -3,11 +3,11 @@ package euf;
 import java.util.HashSet;
 import java.util.Set;
 
-public class Equality {
+public class EUFEquality {
     private boolean isEqual;
     private FunctionSymbol left, right;
 
-    public Equality(FunctionSymbol left, FunctionSymbol right, boolean isEqual) {
+    public EUFEquality(FunctionSymbol left, FunctionSymbol right, boolean isEqual) {
         this.isEqual = isEqual;
         this.left = left;
         this.right = right;

@@ -5,15 +5,15 @@ import util.CongruentClosure;
 import java.util.Set;
 
 public class EUFSat {
-    public static boolean solve(Formula formula) {
+    public static boolean solve(EUFFormula formula) {
         Set<FunctionSymbol> subTerms = formula.getAllSubTerms();
         CongruentClosure closure = new CongruentClosure(subTerms);
 
-        for (Equality equality : formula.getEqualities(true)) {
+        for (EUFEquality equality : formula.getEqualities(true)) {
             closure.newAssociation(equality.getLeft(), equality.getRight());
         }
 
-        for (Equality equality : formula.getEqualities(false)) {
+        for (EUFEquality equality : formula.getEqualities(false)) {
             if (closure.symbolsAreEqual(equality.getLeft(), equality.getRight())) return false;
         }
 
