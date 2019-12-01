@@ -1,41 +1,22 @@
 package arrays;
 
+import base.Formula;
 import euf.EUFEquality;
 import euf.EUFFormula;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
 
-public class ArraysFormula {
-    List<ArraysEquality> equalities;
-
+public class ArraysFormula extends Formula<ArraysSymbol, ArraysEquality> {
     public ArraysFormula() {
-        equalities = new ArrayList<>();
+        super();
     }
 
     public ArraysFormula(List<ArraysEquality> equalities) {
-        this.equalities = equalities;
+        super(equalities);
     }
 
     public ArraysFormula(ArraysFormula formula) {
-        equalities = formula.equalities.stream().map(ArraysEquality::new).collect(Collectors.toList());
-    }
-
-    public void add(ArraysEquality equality) {
-        equalities.add(equality);
-    }
-
-    public Set<ArraysSymbol> getAllSubTerms() {
-        return equalities.stream()
-                .map(ArraysEquality::getAllSubTerms)
-                .flatMap(Set::stream)
-                .collect(Collectors.toSet());
-    }
-
-    public List<ArraysEquality> getEqualities(boolean isEqual) {
-        return equalities.stream().filter(it -> it.isEqual() == isEqual).collect(Collectors.toList());
+        super(formula);
     }
 
     public EUFFormula toEUF() {
@@ -64,10 +45,5 @@ public class ArraysFormula {
             it.replaceInPlaceByX2(newFormula);
         }
         return newFormula;
-    }
-
-    @Override
-    public String toString() {
-        return equalities.stream().map(ArraysEquality::toString).collect(Collectors.joining(" ^ "));
     }
 }

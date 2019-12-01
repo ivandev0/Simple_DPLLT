@@ -1,40 +1,20 @@
 package arrays;
 
+import base.Symbol;
 import euf.FunctionSymbol;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 
-public class ArraysSymbol {
-    private String name;
-    private List<ArraysSymbol> args;
-
+public class ArraysSymbol extends Symbol<ArraysSymbol> {
     public ArraysSymbol(String name, List<ArraysSymbol> args) {
-        this.name = name;
-        this.args = args;
+        super(name, args);
     }
 
-    public ArraysSymbol(ArraysSymbol symbol) {
-        this.name = symbol.name;
-        this.args = symbol.args.stream().map(ArraysSymbol::new).collect(Collectors.toList());
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public List<ArraysSymbol> getArgs() {
-        return args;
-    }
-
-    public Set<ArraysSymbol> getAllSubTerms() {
-        Set<ArraysSymbol> subTerms = new HashSet<>();
-        subTerms.add(this);
-        args.forEach(it -> subTerms.addAll(it.getAllSubTerms()));
-        return subTerms;
+    @Override
+    public ArraysSymbol copy() {
+        return new ArraysSymbol(name, args.stream().map(ArraysSymbol::copy).collect(Collectors.toList()));
     }
 
     public FunctionSymbol toEUF() {
@@ -72,14 +52,5 @@ public class ArraysSymbol {
             }
         }
         args.forEach(it -> it.replaceInPlaceByX1(formula));
-    }
-
-    @Override
-    public String toString() {
-        String argsCollect = args.stream().map(ArraysSymbol::toString).collect(Collectors.joining(","));
-        if (args.size() != 0) {
-            argsCollect = '(' + argsCollect + ')';
-        }
-        return name + argsCollect;
     }
 }
