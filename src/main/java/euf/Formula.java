@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class Formula {
     List<Equality> equalities;
@@ -27,6 +26,10 @@ public class Formula {
                 .map(Equality::getAllSubTerms)
                 .flatMap(Set::stream)
                 .collect(Collectors.toSet());
+    }
+
+    public List<Equality> getEqualities(boolean isEqual) {
+        return equalities.stream().filter(it -> it.isEqual() == isEqual).collect(Collectors.toList());
     }
 
     @Override
