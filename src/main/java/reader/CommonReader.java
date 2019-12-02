@@ -6,6 +6,7 @@ import antlr.generated.common.CommonParser;
 import common.CommonEquality;
 import common.CommonFormula;
 import common.CommonSymbol;
+import common.Kind;
 import org.antlr.v4.runtime.CharStream;
 import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonTokenStream;
@@ -87,12 +88,12 @@ public class CommonReader {
 
         @Override
         public CommonSymbol visitSimple(CommonParser.SimpleContext ctx) {
-            return new CommonSymbol(ctx.IDENTIFIER().toString(), new ArrayList<>());
+            return new CommonSymbol(ctx.IDENTIFIER().toString(), new ArrayList<>(), Kind.EUF);
         }
 
         @Override
         public CommonSymbol visitFunWithArgs(CommonParser.FunWithArgsContext ctx) {
-            return new CommonSymbol(ctx.IDENTIFIER().toString(), visitArgs(ctx.args()));
+            return new CommonSymbol(ctx.IDENTIFIER().toString(), visitArgs(ctx.args()), Kind.EUF);
         }
 
         @Override
@@ -100,7 +101,7 @@ public class CommonReader {
             List<CommonSymbol> args = new ArrayList<>();
             args.add((CommonSymbol) ctx.fun(0).accept(this));
             args.add((CommonSymbol) ctx.fun(1).accept(this));
-            return new CommonSymbol("select", args);
+            return new CommonSymbol("select", args, Kind.ARRAYS);
         }
 
         @Override
@@ -109,7 +110,7 @@ public class CommonReader {
             args.add((CommonSymbol) ctx.fun(0).accept(this));
             args.add((CommonSymbol) ctx.fun(1).accept(this));
             args.add((CommonSymbol) ctx.fun(2).accept(this));
-            return new CommonSymbol("store", args);
+            return new CommonSymbol("store", args, Kind.ARRAYS);
         }
 
         @Override
