@@ -9,10 +9,12 @@ sourceCompatibility = 1.8
 
 repositories {
     mavenCentral()
+    maven { url "https://jitpack.io" }
 }
 
 dependencies {
     compile "org.antlr:antlr4:4.7.2"
     compile "org.antlr:antlr4-runtime:4.7.2"
+    compile 'com.github.vana06:Simple_DPLL:master-SNAPSHOT'
     testCompile group: 'junit', name: 'junit', version: '4.12'
 }
