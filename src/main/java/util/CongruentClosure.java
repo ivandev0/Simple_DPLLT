@@ -23,11 +23,13 @@ public class CongruentClosure {
 
     public void newAssociation(FunctionSymbol first, FunctionSymbol second) {
         Set<FunctionSymbol> equals = new HashSet<>();
-        closure.removeIf(it -> {
-            boolean contains = it.contains(first);
-            if (contains) equals.addAll(it);
-            return contains;
-        });
+        if (closure.size() != 1) {
+            closure.removeIf(it -> {
+                boolean contains = it.contains(first);
+                if (contains) equals.addAll(it);
+                return contains;
+            });
+        }
         closure.forEach(it -> {
             if (it.contains(second)) {
                 it.addAll(equals);

@@ -36,8 +36,10 @@ public class CommonSymbol extends Symbol<CommonSymbol> {
         for (int i = 0; i < args.size(); i++) {
             CommonSymbol arg = args.get(i);
             if ((kind == Kind.EUF && arg.kind != Kind.EUF) ||
+                    (kind == Kind.EUF && arg.kind == Kind.EUF && arg.getArgs().size() > 0) ||
                     (kind == Kind.ARRAYS && arg.kind != Kind.ARRAYS && arg.args.size() != 0)) {
                 CommonSymbol tempVar = formula.nextVar(arg.toString());
+                arg.purify(formula);
                 formula.add(new CommonEquality(arg, tempVar, true));    // arg = newVar
                 args.remove(i);
                 args.add(i, tempVar);                                   // arg -> newVar
