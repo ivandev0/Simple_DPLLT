@@ -1,5 +1,8 @@
 package util;
 
+import common.CommonEquality;
+import common.CommonSymbol;
+import common.Kind;
 import euf.FunctionSymbol;
 
 import java.util.*;
@@ -68,7 +71,8 @@ public class CongruentClosure {
     }
 
     private void union() {
-        L: for (int i = 0; i < closure.size() - 1; i++) {
+        L:
+        for (int i = 0; i < closure.size() - 1; i++) {
             Set<FunctionSymbol> functionSymbols1 = closure.get(i);
             for (int j = i + 1; j < closure.size(); j++) {
                 Set<FunctionSymbol> functionSymbols2 = closure.get(j);
@@ -85,6 +89,26 @@ public class CongruentClosure {
 
     public boolean symbolsAreEqual(FunctionSymbol first, FunctionSymbol second) {
         return closure.stream().anyMatch(it -> it.contains(first) && it.contains(second));
+    }
+
+    public List<CommonEquality> getAllCommon(List<FunctionSymbol> singleLiteralSymbols) {
+        List<CommonEquality> pairs = new ArrayList<>();
+        for (Set<FunctionSymbol> symbols : closure) {
+            for (FunctionSymbol functionSymbol1 : symbols) {
+                for (FunctionSymbol functionSymbol2 : symbols) {
+                    if (functionSymbol1 != functionSymbol2 &&
+                            singleLiteralSymbols.contains(functionSymbol1) &&
+                            singleLiteralSymbols.contains(functionSymbol2)
+                    ) {
+                        CommonSymbol left = new CommonSymbol(functionSymbol1.getName(), new ArrayList<>(), Kind.EUF);
+                        CommonSymbol right = new CommonSymbol(functionSymbol2.getName(), new ArrayList<>(), Kind.EUF);
+                        pairs.add(new CommonEquality(left, right, true));
+                    }
+                }
+            }
+        }
+
+        return pairs;
     }
 }
 

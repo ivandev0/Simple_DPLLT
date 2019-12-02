@@ -19,4 +19,19 @@ public class EUFSat {
 
         return true;
     }
+
+    public static CongruentClosure solveWithClosure(EUFFormula formula) {
+        Set<FunctionSymbol> subTerms = formula.getAllSubTerms();
+        CongruentClosure closure = new CongruentClosure(subTerms);
+
+        for (EUFEquality equality : formula.getEqualities(true)) {
+            closure.newAssociation(equality.getLeft(), equality.getRight());
+        }
+
+        for (EUFEquality equality : formula.getEqualities(false)) {
+            if (closure.symbolsAreEqual(equality.getLeft(), equality.getRight())) return null;
+        }
+
+        return closure;
+    }
 }

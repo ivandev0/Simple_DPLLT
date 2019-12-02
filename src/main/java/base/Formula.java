@@ -21,7 +21,7 @@ public class Formula<T extends Symbol<T>, E extends Equality<T>> {
     }
 
     public void add(E equality) {
-        equalities.add(equality);
+        if (!equalities.contains(equality)) equalities.add(equality);
     }
 
     public Set<T> getAllSubTerms() {
@@ -33,6 +33,10 @@ public class Formula<T extends Symbol<T>, E extends Equality<T>> {
 
     public List<E> getEqualities(boolean isEqual) {
         return equalities.stream().filter(it -> it.isEqual() == isEqual).collect(Collectors.toList());
+    }
+
+    public int getEqualitiesCount() {
+        return equalities.size();
     }
 
     @Override

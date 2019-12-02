@@ -28,10 +28,8 @@ public class CommonFormula extends Formula<CommonSymbol, CommonEquality> {
     public Set<CommonEquality> toFOL(Model model) {
         Set<CommonEquality> equalitySet = new HashSet<>();
         pool.forEach((key, value) -> {
-            if (model.containsLiteral(value)) {
+            if (model.containsLiteral(value) || model.containsLiteral(-value)) {
                 equalitySet.add(key);
-            } else if (model.containsLiteral(-value)) {
-                equalitySet.add((CommonEquality) key.inverse());
             }
         });
         return equalitySet;

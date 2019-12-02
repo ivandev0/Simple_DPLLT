@@ -20,7 +20,7 @@ public class CommonEquality extends Equality<CommonSymbol> {
         if (left.getKind() != right.getKind()) {
             CommonSymbol tempVar = formula.nextVar(left.toString());
             formula.add(new CommonEquality(left, tempVar, true));
-            formula.add(new CommonEquality(right, tempVar, true));
+            formula.add(new CommonEquality(right, tempVar, isEqual));
         } else {
             formula.add(this);
         }
