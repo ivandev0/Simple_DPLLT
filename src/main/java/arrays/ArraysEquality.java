@@ -12,13 +12,11 @@ public class ArraysEquality extends Equality<ArraysSymbol> {
         return new ArraysEquality(left.copy(), right.copy(), isEqual);
     }
 
-    public void replaceInPlaceByX1(ArraysFormula formula) {
-        left.replaceInPlaceByX1(formula);
-        right.replaceInPlaceByX1(formula);
+    public boolean replaceInPlaceByX1(ArraysFormula formula) {
+        return left.replaceInPlaceByX1(formula) | right.replaceInPlaceByX1(formula);
     }
 
-    public void replaceInPlaceByX2(ArraysFormula formula) {
-        left.replaceInPlaceByX2(formula);
-        right.replaceInPlaceByX2(formula);
+    public boolean replaceInPlaceByX2(ArraysFormula formula) {
+        return left.replaceInPlaceByX2(formula) | right.replaceInPlaceByX2(formula);
     }
 }

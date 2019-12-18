@@ -22,6 +22,8 @@ public class CongruentClosure {
     }
 
     public void newAssociation(FunctionSymbol first, FunctionSymbol second) {
+        if (first.equals(second)) return;
+        if (closure.stream().anyMatch(it -> it.contains(first) && it.contains(second))) return;
         Set<FunctionSymbol> equals = new HashSet<>();
         if (closure.size() != 1) {
             closure.removeIf(it -> {

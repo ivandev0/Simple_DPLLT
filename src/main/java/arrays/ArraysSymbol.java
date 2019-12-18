@@ -29,19 +29,21 @@ public class ArraysSymbol extends Symbol<ArraysSymbol> {
         }
     }
 
-    public void replaceInPlaceByX1(ArraysFormula formula) {
+    public boolean replaceInPlaceByX1(ArraysFormula formula) {
         if (name.equals("select")) {
             ArraysSymbol firstArg = args.get(0);
             if (firstArg.name.equals("store")) {
                 formula.add(new ArraysEquality(firstArg.getArgs().get(1), args.get(1), true));
                 name = firstArg.getArgs().get(2).name;
-                args = new ArrayList<>();
+                args = firstArg.getArgs().get(2).args;
+                return true;
             }
         }
-        args.forEach(it -> it.replaceInPlaceByX1(formula));
+        //args.forEach(it -> it.replaceInPlaceByX1(formula));
+        return false;
     }
 
-    public void replaceInPlaceByX2(ArraysFormula formula) {
+    public boolean replaceInPlaceByX2(ArraysFormula formula) {
         if (name.equals("select")) {
             ArraysSymbol firstArg = args.get(0);
             if (firstArg.name.equals("store")) {
@@ -51,6 +53,7 @@ public class ArraysSymbol extends Symbol<ArraysSymbol> {
                 args.add(0, array);
             }
         }
-        args.forEach(it -> it.replaceInPlaceByX1(formula));
+        //args.forEach(it -> it.replaceInPlaceByX1(formula));
+        return false;
     }
 }

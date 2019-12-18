@@ -30,9 +30,10 @@ public class ArraysFormula extends Formula<ArraysSymbol, ArraysEquality> {
     public ArraysFormula replaceByX1() {
         ArraysFormula newFormula = new ArraysFormula(this);
         List<ArraysEquality> arraysEqualities = newFormula.equalities;
-        for (int i = 0; i < arraysEqualities.size(); i++) {
+        boolean next = true;
+        for (int i = 0; i < arraysEqualities.size() && next; i++) {
             ArraysEquality it = arraysEqualities.get(i);
-            it.replaceInPlaceByX1(newFormula);
+            next = !it.replaceInPlaceByX1(newFormula);
         }
         return newFormula;
     }
@@ -40,9 +41,10 @@ public class ArraysFormula extends Formula<ArraysSymbol, ArraysEquality> {
     public ArraysFormula replaceByX2() {
         ArraysFormula newFormula = new ArraysFormula(this);
         List<ArraysEquality> arraysEqualities = newFormula.equalities;
-        for (int i = 0; i < arraysEqualities.size(); i++) {
+        boolean next = true;
+        for (int i = 0; i < arraysEqualities.size() && next; i++) {
             ArraysEquality it = arraysEqualities.get(i);
-            it.replaceInPlaceByX2(newFormula);
+            next = !it.replaceInPlaceByX2(newFormula);
         }
         return newFormula;
     }
